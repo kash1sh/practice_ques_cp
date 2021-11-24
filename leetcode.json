@@ -1,0 +1,18 @@
+#define ll long long
+#define pb push_back
+#define vll vector<ll>
+#define vpll vector<pair<ll, ll>>
+#define fo(i, k, n) for (ll i = k; i < n; i++)
+#define fo1(i, k, n) for (ll i = k; i <= n; i++)
+#define rr return
+#define Endl endl
+#define ff first
+#define ss second
+
+#define debug(x) cout << #x << " " << x << endl;
+void deb(vector<ll> v)
+{
+    for (auto t : v)
+        cout << t << " ";
+    // cerr << "\n";
+}

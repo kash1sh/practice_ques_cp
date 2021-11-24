@@ -1,0 +1,1 @@
+{"name":"Local: ch","url":"c:\\Users\\kashi\\Desktop\\cf\\Practice_Ques\\ch.cpp","tests":[{"id":1631373646358,"input":"3\n2\n3 4\n3\n5 2 1\n5\n4 5 5 2 4","output":"1\n3\n6"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\kashi\\Desktop\\cf\\Practice_Ques\\ch.cpp","group":"local","local":true}

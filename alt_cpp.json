@@ -1,0 +1,26 @@
+ll add(ll a, ll b,ll mod) {
+    a%=mod;
+    b%=mod;
+    a += b;
+    if (a >= mod) a -= mod;
+    if(a<0)
+    {
+        a += mod;
+        a %= mod;
+    }
+    return a;
+}
+
+ll mul(ll a, ll b,ll mod) {
+    a%=mod;
+    b%=mod;
+    a *= b;
+    a += mod;
+    return a % mod;
+}
+// ll modInverse(ll a, ll m){
+//     ll x, y;
+//     ll g = gcdExtended(a, m, &x, &y);
+//         ll res = (x%m + m) % m;
+//         return res;
+// }
