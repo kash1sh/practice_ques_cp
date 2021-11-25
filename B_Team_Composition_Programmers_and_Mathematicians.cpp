@@ -167,49 +167,18 @@ void solve()
 {
     ll n, m;
     cin >> n >> m;
-    vll a(n), b(m);
-    multiset<ll> s1, s2;
-    for (ll i = 0; i < n; i++)
-    {
-        cin >> a[i];
-        s1.insert(a[i]);
-    }
-    for (ll i = 0; i < m; i++)
-    {
-        cin >> b[i];
-        s2.insert(b[i]);
-    }
 
-    for (ll i = 0; i < m; i++)
-    {
-        ll val = b[i];
-        auto num = s1.lower_bound(val);
-        if (*num == b[i])
-        {
-            cout << *num << endl;
-            s1.erase(num);
-            continue;
-        }
-        if (num == s1.begin())
-        {
-            cout << -1 << endl;
-            // s1.erase(s1.begin());
-            continue;
-        }
-
-        --num;
-        s1.erase(num);
-        cout << *num << endl;
-        // rr;
-    }
+    ll val = (n + m) / 4;
+    cout << min(val, min(m, n)) << endl;
+    rr;
 }
 int main()
 {
     io();
     // solve();
-    ll t = 1;
-    // ll t;
-    // cin >> t;
+    // ll t=1;
+    ll t;
+    cin >> t;
     while (t--)
     {
         solve();

@@ -160,30 +160,46 @@ void solve()
 {
     ll x, n;
     cin >> x >> n;
-    vll a(n);
     set<ll> s;
-    // fo(i,0,n){
-    // cin>>a[i];
-    // s.insert(a[i]);
-    // }
-    multiset<ll> dis;
+    multiset<ll> dist;
     s.insert(0);
     s.insert(x);
-    dis.insert(x);
-
+    dist.insert(x);
     for (ll i = 0; i < n; i++)
     {
-        cin >> a[i];
-        auto val = s.upper_bound(a[i]);
-        // val--;
-        dis.erase(dis.find(*val - *prev(val)));
-        dis.insert(*val - a[i]);
-        dis.insert(a[i] - *prev(val));
-        s.insert(a[i]);
-        cout << *dis.rbegin() << " ";
+        ll ele;
+        cin >> ele;
+        auto ind = s.upper_bound(ele);
+        dist.erase(dist.find(*ind - *prev(ind)));
+        dist.insert(*ind - ele);
+        dist.insert(ele - *prev(ind));
+        s.insert(ele);
+        cout << *dist.rbegin() << " ";
     }
-    cout << endl;
-    rr;
+    // vll a(n);
+    // set<ll> s;
+    // // fo(i,0,n){
+    // // cin>>a[i];
+    // // s.insert(a[i]);
+    // // }
+    // multiset<ll> dis;
+    // s.insert(0);
+    // s.insert(x);
+    // dis.insert(x);
+
+    // for (ll i = 0; i < n; i++)
+    // {
+    //     cin >> a[i];
+    //     auto val = s.upper_bound(a[i]);
+    //     // val--;
+    //     dis.erase(dis.find(*val - *prev(val)));
+    //     dis.insert(*val - a[i]);
+    //     dis.insert(a[i] - *prev(val));
+    //     s.insert(a[i]);
+    //     cout << *dis.rbegin() << " ";
+    // }
+    // cout << endl;
+    // rr;
 }
 int main()
 {

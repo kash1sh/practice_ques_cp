@@ -165,51 +165,52 @@ bool isPowerOfTwo(ll n)
 
 void solve()
 {
-    ll n, m;
-    cin >> n >> m;
-    vll a(n), b(m);
-    multiset<ll> s1, s2;
-    for (ll i = 0; i < n; i++)
+    ll n;
+    cin >> n;
+    if (n % 2 == 0)
     {
-        cin >> a[i];
-        s1.insert(a[i]);
-    }
-    for (ll i = 0; i < m; i++)
-    {
-        cin >> b[i];
-        s2.insert(b[i]);
+        cout << 0 << endl;
+        rr;
     }
 
-    for (ll i = 0; i < m; i++)
+    string s = to_string(n);
+    bool f = false;
+    // cou/t << s << Endl;
+
+    for (ll i = 0; i < s.size(); i++)
     {
-        ll val = b[i];
-        auto num = s1.lower_bound(val);
-        if (*num == b[i])
+        // if(s[i])
+        ll val = s[i] - '0';
+        debug(val);
+        if (val % 2 == 0)
         {
-            cout << *num << endl;
-            s1.erase(num);
-            continue;
+            f = true;
+            break;
         }
-        if (num == s1.begin())
-        {
-            cout << -1 << endl;
-            // s1.erase(s1.begin());
-            continue;
+    }
+    if (f == false)
+    {
+        cout << -1 << endl;
+        rr;
         }
 
-        --num;
-        s1.erase(num);
-        cout << *num << endl;
-        // rr;
+    // if()
+    ll val = s[0] - '0';
+    if (val % 2 == 0)
+    {
+        cout << 1 << endl;
+        rr;
     }
+    cout << 2 << Endl;
+    rr;
 }
 int main()
 {
     io();
     // solve();
-    ll t = 1;
-    // ll t;
-    // cin >> t;
+    // ll t=1;
+    ll t;
+    cin >> t;
     while (t--)
     {
         solve();

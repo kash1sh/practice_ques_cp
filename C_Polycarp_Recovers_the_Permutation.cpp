@@ -165,51 +165,47 @@ bool isPowerOfTwo(ll n)
 
 void solve()
 {
-    ll n, m;
-    cin >> n >> m;
-    vll a(n), b(m);
-    multiset<ll> s1, s2;
+    ll n;
+    cin >> n;
+    vll a(n);
     for (ll i = 0; i < n; i++)
     {
         cin >> a[i];
-        s1.insert(a[i]);
     }
-    for (ll i = 0; i < m; i++)
+    deque<ll> q;
+    if (n != a[n - 1] && n != a[0])
     {
-        cin >> b[i];
-        s2.insert(b[i]);
+        cout << -1 << Endl;
+        rr;
     }
-
-    for (ll i = 0; i < m; i++)
+    ll i = 0, j = n - 1;
+    while (i <= j)
     {
-        ll val = b[i];
-        auto num = s1.lower_bound(val);
-        if (*num == b[i])
+        if (a[j] < a[i])
         {
-            cout << *num << endl;
-            s1.erase(num);
-            continue;
+            q.pb(a[j]);
+            j--;
         }
-        if (num == s1.begin())
+        else
         {
-            cout << -1 << endl;
-            // s1.erase(s1.begin());
-            continue;
+            q.push_front(a[i]);
+            i++;
         }
-
-        --num;
-        s1.erase(num);
-        cout << *num << endl;
-        // rr;
     }
+    for (ll i = 0; i < n; i++)
+    {
+        cout << q[i] << " ";
+    }
+    cout << endl;
+    rr;
 }
 int main()
 {
     io();
     // solve();
-    ll t = 1;
-    // ll t;
-    // cin >> t;
+    // ll t=1;
+    ll t;
+    cin >> t;
     while (t--)
     {
         solve();
