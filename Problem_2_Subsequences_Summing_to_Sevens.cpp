@@ -26,9 +26,9 @@ void io()
     ios::sync_with_stdio(false);
     cin.tie(0);
     // #ifndef ONLINE_JUDGE
-    freopen("div7.in", "r", stdin);
+    // freopen("div7.in", "r", stdin);
     // freopen("error.txt","w",stderr);
-    freopen("div7.out", "w", stdout);
+    // freopen("div7.out", "w", stdout);
     // #endif
 }
 
@@ -188,29 +188,48 @@ void solve()
     ll n;
     cin >> n;
     vll a(n + 1);
+    map<ll, ll> m;
     for (ll i = 1; i <= n; i++)
     {
         cin >> a[i];
+        // m[a[i]]
     }
 
     vll pre(n + 1, 0);
-    pre[1] = a[1];
-    for (ll i = 2; i <= n; i++)
-    {
-        pre[i] = pre[i - 1] + a[i - 1];
-    }
-    ll len = LONG_MIN;
+    // pre[1] = a[1];
     for (ll i = 1; i <= n; i++)
     {
-        for (ll j = i + 1; j <= n; j++)
-        {
+        pre[i] = (pre[i - 1] + a[i]);
+        // m[pre[i]%7]++;
+        // m[]
+    }
+    ll len = LONG_MIN;
 
-            if ((pre[j] - pre[i - 1]) % 7 == 0)
-            {
-                len = max(len, j - i + 1);
-            }
+    for (ll i = 0; i < n; i++)
+    {
+        // m[]
+        if (m[pre[i] % 7] == 0)
+        {
+            m[pre[i] % 7] = i;
+        }
+        else
+        {
+            len = max(len, i - m[pre[i] % 7]);
         }
     }
+    cout << len << endl;
+    rr;
+    // for (ll i = 1; i <= n; i++)
+    // {
+    //     for (ll j = i + 1; j <= n; j++)
+    //     {
+
+    //         if ((pre[j] - pre[i - 1]) % 7 == 0)
+    //         {
+    //             len = max(len, j - i + 1);
+    //         }
+    //     }
+    // }
 
     cout << len << endl;
     rr;

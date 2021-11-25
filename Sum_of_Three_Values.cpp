@@ -10,10 +10,11 @@
 #define Endl endl
 #define ff first
 #define ss second
-#define all(X) (X).begin(), (X).end()
-
+// #define all(X) (X).begin(), (X).end()
+clock_t startTime = clock();
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
+#define all(v) v.begin(), v.end()
 #ifndef ONLINE_JUDGE
 #define debug(x) cerr << #x << " " << x << endl;
 #else
@@ -31,7 +32,7 @@ void io()
     // freopen("output.txt", "w", stdout);
     // #endif
 }
-
+double PI = 4 * atan(1);
 ll mod = 1e9 + 7, mxn = 3e5 + 5;
 void deb(vector<ll> v)
 {
@@ -89,6 +90,7 @@ ll binom(ll a, ll b)
     return (((fact[a] * inv(fact[b])) % mod * inv(fact[a - b])) % mod + mod) % mod;
 }
 // CONDITION && cout << "YES" || cout << "NO"; cout << '\n';
+// int a = count(all(s),'A');
 vector<int> sieveOfEratosthenes(int N)
 {
     bool primes[N + 1];
@@ -140,6 +142,7 @@ bool valid_coordinate(ll x, ll y, ll n, ll m)
     else
         return true;
 }
+
 int sod(int n)
 {
     int sum = 0;
@@ -155,99 +158,65 @@ bool isPowerOfTwo(ll n)
 {
     return n && (!(n & (n - 1)));
 }
-
+// Find Min/Max
+// * Greedy/Brute Force
+// * DP
+// * BS
+void imp()
+{
+    cout << "IMPOSSIBLE" << endl;
+    rr;
+}
 void solve()
 {
-    // ll n, x;
-    // cin >> n >> x;
-    // vll a(n);
-    // fo(i, 0, n)
-    // {
-    //     cin >> a[i];
-    // }
-    // if (n <= 2)
-    // {
-    //     cout << "IMPOSSIBLE" << Endl;
-    //     rr;
-    // }
-    // if (n == 3)
-    // {
-    //     if (a[0] + a[1] + a[2] == x)
-    //     {
-    //         cout << 1 << " " << 2 << " " << 3 << Endl;
-    //         rr;
-    //     }
-    //     cout << "IMPOSSIBLE" << endl;
-    //     rr;
-    // }
-    // map<ll, ll> m;
-    // for (ll i = 0; i < n; i++)
-    // {
-    //     m[a[i]] = i + 1;
-    // }
-
-    // for (ll i = 0; i < n; i++)
-    // {
-    //     for (ll j = i + 1; j < n; j++)
-    //     {
-    //         ll sum = a[i] + a[j];
-    //         ll val = x - sum;
-    //         if (m[val] && (val - 1) != i && (val - 1) != j)
-    //         {
-    //             cout << i + 1 << " " << j + 1 << " " << m[val] << endl;
-    //             rr;
-    //         }
-    //     }
-    // }
-    // cout << "IMPOSSIBLE" << endl;
-    // rr;
     ll n, x;
     cin >> n >> x;
-    // if (x >)
+
     vpll a(n);
-
-    // map<ll, ll> m;
-    // ll sum = 0;
-    fo(i, 0, n)
+    for (ll i = 0; i < n; i++)
     {
-
         cin >> a[i].ff;
         a[i].ss = i + 1;
-        // sum += a[i];
-        // m[a[i]] = i + 1;
     }
     sort(a.begin(), a.end());
-    if (n <= 2)
+    if (n < 3)
     {
-        cout << "IMPOSSIBLE" << Endl;
+        imp();
         rr;
     }
-    if (n == 3)
+    if (a[n - 3].ff + a[n - 2].ff + a[n - 1].ff < x)
     {
-        if (a[0].ff + a[1].ff + a[2].ff == x)
-        {
-            cout << 1 << " " << 2 << " " << 3 << Endl;
-            rr;
-        }
-        cout << "IMPOSSIBLE" << endl;
+        imp();
         rr;
     }
 
-    for (ll ii = 0; ii < n; ii++)
+    for (ll k = 0; k < n; k++)
     {
-        ll val = x - a[ii].ff;
         ll i = 0, j = n - 1;
-
         while (i < j)
         {
-            if (i != ii && j != ii && (a[i].ff + a[j].ff == val))
+            if (i == k)
+                i++;
+            if (j == k)
+                j--;
+            debug(a[k].ff);
+            debug(a[i].ff);
+            ll val = a[k].ff + a[i].ff + a[j].ff;
+            // debug(val);
+            if (val == x)
             {
-                // cout << a[i].ss << " " << a[j].ss << endl;
-                // cout << min(a[i].ss, a[j].ss) << " " << max(a[i].ss, a[j].ss) << endl;
-                cout << a[i].ss << " " << a[ii].ss << " " << a[j].ss << Endl;
-                rr;
+                // cout<<a
+                vll v;
+                v.pb(a[k].ss), v.pb(a[j].ss), v.pb(a[i].ss);
+                sort(v.begin(), v.end());
+                for (ll i = 0; i < 3; i++)
+                {
+                    cout << v[i] << " ";
+                }
+                cout << Endl;
+                return;
             }
-            else if (a[i].ff + a[j].ff > val)
+            else if (val > x)
             {
                 j--;
             }
@@ -257,7 +226,7 @@ void solve()
             }
         }
     }
-    cout << "IMPOSSIBLE" << Endl;
+    imp();
     rr;
 }
 int main()
@@ -267,12 +236,12 @@ int main()
     ll t = 1;
     // ll t;
     // cin >> t;
-    // cerr << endl <<setprecision(20)<< double( clock() - startTime ) / (double)CLOCKS_PER_SEC<< " seconds." << endl;
     while (t--)
     {
         solve();
     }
-
-    // cout<<setprecision(10)
+    // cerr << endl <<setprecision(20)<< double( clock() - startTime ) / (double)CLOCKS_PER_SEC<< " seconds." << endl;
+    // cout<<fixed<<setprecision(10)<<ans<<endl;
+    // cout<<printf("%.8lf", hi)<<endl;
     return 0;
 }

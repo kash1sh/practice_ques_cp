@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 #define ll long long
 #define pb push_back
@@ -9,10 +10,11 @@
 #define Endl endl
 #define ff first
 #define ss second
-#define all(X) (X).begin(), (X).end()
+// #define all(X) (X).begin(), (X).end()
 clock_t startTime = clock();
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
+#define all(v) v.begin(), v.end()
 #ifndef ONLINE_JUDGE
 #define debug(x) cerr << #x << " " << x << endl;
 #else
@@ -88,6 +90,7 @@ ll binom(ll a, ll b)
     return (((fact[a] * inv(fact[b])) % mod * inv(fact[a - b])) % mod + mod) % mod;
 }
 // CONDITION && cout << "YES" || cout << "NO"; cout << '\n';
+// int a = count(all(s),'A');
 vector<int> sieveOfEratosthenes(int N)
 {
     bool primes[N + 1];
@@ -139,6 +142,7 @@ bool valid_coordinate(ll x, ll y, ll n, ll m)
     else
         return true;
 }
+
 int sod(int n)
 {
     int sum = 0;
@@ -154,6 +158,10 @@ bool isPowerOfTwo(ll n)
 {
     return n && (!(n & (n - 1)));
 }
+// Find Min/Max
+// * Greedy/Brute Force
+// * DP
+// * BS
 
 void solve()
 {
@@ -161,40 +169,45 @@ void solve()
     cin >> n >> m;
     vll a(n), b(m);
 
-    fo(i, 0, n)
+    for (ll i = 0; i < n; i++)
     {
         cin >> a[i];
     }
-    fo(i, 0, m)
+    for (ll i = 0; i < m; i++)
     {
         cin >> b[i];
     }
-
-    // for(ll i=0)
-    ll dist = 0;
-
+    ll r = LONG_MIN;
     for (ll i = 0; i < n; i++)
     {
-        ll large = lower_bound(b.begin(), b.end(), a[i]) - b.begin();
-        debug(large);
-        // large--;
-        if (large == m)
+        // if()
+        // if (i == 0)
+        // {
+        //     r = abs(b[0] - a[0]);
+        //     continue;
+        // }
+        ll ind = upper_bound(b.begin(), b.end(), a[i]) - b.begin();
+        debug(ind);
+        // ll pos = (ind - 1 >= 0
+        //   ? ind - 1
+        //   : 0);
+        if (ind == m)
         {
-            dist = max(dist, a[i] - b[large - 1]);
-            continue;
+            r = max(r, a[i] - b[m - 1]);
         }
-        if (large == 0)
+        if (ind == 0)
         {
-            dist = max(dist, b[0] - a[i]);
-            continue;
+            r = max(r, b[0] - a[i]);
         }
-        // ll small = -1;
-        // if (large >= 1)
-        ll small = large - 1;
-        ll mini = min(a[i] - b[small], b[large] - a[i]);
-        dist = max(dist, mini);
+        else
+        {
+            ll val = min(b[ind] - a[i], a[i] - b[ind - 1]);
+            debug(val);
+            r = max(r, val);
+        }
+        // ll val=b[ind];
     }
-    cout << dist << endl;
+    cout << r << Endl;
     rr;
 }
 int main()
@@ -209,6 +222,7 @@ int main()
         solve();
     }
     // cerr << endl <<setprecision(20)<< double( clock() - startTime ) / (double)CLOCKS_PER_SEC<< " seconds." << endl;
-    // cout<<setprecision(10)
+    // cout<<fixed<<setprecision(10)<<ans<<endl;
+    // cout<<printf("%.8lf", hi)<<endl;
     return 0;
 }
