@@ -10,10 +10,11 @@
 #define Endl endl
 #define ff first
 #define ss second
-#define all(X) (X).begin(), (X).end()
+// #define all(X) (X).begin(), (X).end()
 clock_t startTime = clock();
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
+#define all(v) v.begin(), v.end()
 #ifndef ONLINE_JUDGE
 #define debug(x) cerr << #x << " " << x << endl;
 #else
@@ -25,14 +26,11 @@ void io()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
-#ifndef ONLINE_JUDGE
-    freopen("socdist.in", "r", stdin);
-
-    freopen("socdist.out", "w", stdout);
-// freopen("input.txt", "r", stdin);
-// freopen("error.txt","w",stderr);
-// freopen("output.txt", "w", stdout);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("input.txt", "r", stdin);
+    // freopen("error.txt","w",stderr);
+    // freopen("output.txt", "w", stdout);
+    // #endif
 }
 double PI = 4 * atan(1);
 ll mod = 1e9 + 7, mxn = 3e5 + 5;
@@ -92,6 +90,7 @@ ll binom(ll a, ll b)
     return (((fact[a] * inv(fact[b])) % mod * inv(fact[a - b])) % mod + mod) % mod;
 }
 // CONDITION && cout << "YES" || cout << "NO"; cout << '\n';
+// int a = count(all(s),'A');
 vector<int> sieveOfEratosthenes(int N)
 {
     bool primes[N + 1];
@@ -143,6 +142,7 @@ bool valid_coordinate(ll x, ll y, ll n, ll m)
     else
         return true;
 }
+
 int sod(int n)
 {
     int sum = 0;
@@ -158,80 +158,116 @@ bool isPowerOfTwo(ll n)
 {
     return n && (!(n & (n - 1)));
 }
-ll n, m;
-vpll a;
-bool check(ll val)
-{
-    ll ele = a[0].ff;
-    ll cnt = 1;
-    for (ll i = 0; i < m; i++)
-    {
-        if (ele + val <= a[i].ff)
-        {
-            ele = a[i].ff;
-            cnt++;
-        }
-        while (a[i].ss >= ele + val)
-        {
-            ele = ele + val;
-            cnt++;
-        }
-        // if (cnt >= n)
-        // return true;
-        // if(ele+val<a[i].ff)
-    }
-    return cnt >= n;
-    // return false;
-}
+// Find Min/Max
+// * Greedy/Brute Force
+// * DP
+// * BS
+
 void solve()
 {
-
-    cin >> n >> m;
-    a.resize(m);
-    // vll pre(n + 1, 0);
-    for (ll i = 0; i < m; i++)
+    ll n;
+    cin >> n;
+    vll a(n);
+    vll eve, odd;
+    ll maxe = LONG_MIN, maxo = LONG_MIN;
+    for (ll i = 0; i < n; i++)
     {
-        ll x, y;
-        cin >> x >> y;
-        a[i].ff = x;
-        a[i].ss = y;
-        // pre[x] = 1;
-        // pre[y + 1] = -1;
-        // a.pb(x);
+        cin >> a[i];
+        if (a[i] % 2 == 0)
+            maxe = max(a[i], maxe), eve.pb(a[i]);
+        else
+            maxo = max(a[i], maxo), odd.pb(a[i]);
     }
     sort(a.begin(), a.end());
-    ll l = 0, h = a[m - 1].ss;
-
-    while (l < h)
+    if (n == 1)
     {
-        ll mid = l + (h - l + 1) / 2;
-        if (check(mid))
-            l = mid;
-        else
-            h = mid - 1;
+        cout << a[0] << endl;
+        rr;
     }
-    cout << l << endl;
+    if (n == 2)
+    {
+        if (a[0] % 2 == 1 && a[1] % 2 == 1)
+        {
+            cout << a[0] + a[1] << endl;
+            rr;
+        }
+        else if (a[0] % 2 == 0 && a[1] % 2 == 1)
+        {
+            ll val = a[0] / 2;
+            cout << a[1] * 2 * val << endl;
+            rr;
+        }
+        else if (a[1] % 2 == 0 && a[0] % 2 == 1)
+        {
+            ll val = a[1] / 2;
+            cout << a[0] * 2 * val << endl;
+            rr;
+        }
+        else
+        {
+            ll val = a[0] / 2;
+            cout << a[1] * 2 * val << endl;
+            rr;
+        }
+    }
+    ll sum = 0;
+
+    bool f1 = true;
+    // debug(f1);
+    if (odd.size() == 0)
+    {
+        // maxo = maxe;
+        // f1 = false;
+        bool ff = false;
+        for (ll i = 0; i < eve.size(); i++)
+        {
+            if (ff == false && maxe == eve[i])
+            {
+                ff = true;
+                continue;
+            }
+
+            ll val = eve[i] / 2;
+            // debug(val);
+            maxe *= val * (2);
+        }
+        // debug(maxe);
+        cout << maxe + eve.size() - 1 << Endl;
+        rr;
+    }
+    bool f = false;
+    for (ll i = 0; i < odd.size(); i++)
+    {
+        if (f == false && maxo == odd[i])
+        {
+            f = true;
+            continue;
+        }
+        sum += odd[i];
+    }
+    for (ll i = 0; i < eve.size(); i++)
+    {
+        ll val = eve[i] / 2;
+
+        maxo = val * (maxo * (2));
+    }
+    ll add = eve.size();
+    cout << maxo + sum + add << Endl;
     rr;
-    // vll p(n + 1, 0);
-    // for (ll i = 1; i <= n; i++)
-    // {
-    // if (p[i] == 1)
-    // continue;
-    // p[i] = p[i - 1] + pre[i];
-    // }
 }
 int main()
 {
     io();
     // solve();
-    ll t = 1;
-    // ll t;
-    // cin >> t;
+    // ll t=1;
+    ll t;
+    cin >> t;
     while (t--)
     {
         solve();
     }
     // cerr << endl <<setprecision(20)<< double( clock() - startTime ) / (double)CLOCKS_PER_SEC<< " seconds." << endl;
-    // cout<<setprecision(10)
+    // cout<<fixed<<setprecision(10)<<ans<<endl;
+    // cout<<printf("%.8lf", hi)<<endl;
     return 0;
 }

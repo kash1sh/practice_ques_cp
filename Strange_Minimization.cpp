@@ -10,10 +10,11 @@
 #define Endl endl
 #define ff first
 #define ss second
-#define all(X) (X).begin(), (X).end()
+// #define all(X) (X).begin(), (X).end()
 clock_t startTime = clock();
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
+#define all(v) v.begin(), v.end()
 #ifndef ONLINE_JUDGE
 #define debug(x) cerr << #x << " " << x << endl;
 #else
@@ -25,14 +26,11 @@ void io()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
-#ifndef ONLINE_JUDGE
-    freopen("socdist.in", "r", stdin);
-
-    freopen("socdist.out", "w", stdout);
-// freopen("input.txt", "r", stdin);
-// freopen("error.txt","w",stderr);
-// freopen("output.txt", "w", stdout);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("input.txt", "r", stdin);
+    // freopen("error.txt","w",stderr);
+    // freopen("output.txt", "w", stdout);
+    // #endif
 }
 double PI = 4 * atan(1);
 ll mod = 1e9 + 7, mxn = 3e5 + 5;
@@ -92,6 +90,7 @@ ll binom(ll a, ll b)
     return (((fact[a] * inv(fact[b])) % mod * inv(fact[a - b])) % mod + mod) % mod;
 }
 // CONDITION && cout << "YES" || cout << "NO"; cout << '\n';
+// int a = count(all(s),'A');
 vector<int> sieveOfEratosthenes(int N)
 {
     bool primes[N + 1];
@@ -143,6 +142,7 @@ bool valid_coordinate(ll x, ll y, ll n, ll m)
     else
         return true;
 }
+
 int sod(int n)
 {
     int sum = 0;
@@ -158,80 +158,65 @@ bool isPowerOfTwo(ll n)
 {
     return n && (!(n & (n - 1)));
 }
-ll n, m;
-vpll a;
-bool check(ll val)
+// Find Min/Max
+// * Greedy/Brute Force
+// * DP
+// * BS
+ll s(ll n)
 {
-    ll ele = a[0].ff;
-    ll cnt = 1;
-    for (ll i = 0; i < m; i++)
+
+    if (!(n & 1))
+        return (3 - 1);
+    for (ll i = 3; i * i <= n; i = i + 2)
     {
-        if (ele + val <= a[i].ff)
-        {
-            ele = a[i].ff;
-            cnt++;
-        }
-        while (a[i].ss >= ele + val)
-        {
-            ele = ele + val;
-            cnt++;
-        }
-        // if (cnt >= n)
-        // return true;
-        // if(ele+val<a[i].ff)
+        if (n % i == 0)
+            return i;
     }
-    return cnt >= n;
-    // return false;
+    return n;
+}
+
+bool check(ll n)
+{
+
+    if (n <= 1)
+        return false;
+
+    // Check from 2 to square root of n
+    for (int i = 2; i <= sqrt(n); i++)
+        if (n % i == 0)
+            return false;
+
+    return true;
 }
 void solve()
 {
-
-    cin >> n >> m;
-    a.resize(m);
-    // vll pre(n + 1, 0);
-    for (ll i = 0; i < m; i++)
+    ll n;
+    cin >> n;
+    ll num = s(n);
+    debug(num);
+    if (check(n))
     {
-        ll x, y;
-        cin >> x >> y;
-        a[i].ff = x;
-        a[i].ss = y;
-        // pre[x] = 1;
-        // pre[y + 1] = -1;
-        // a.pb(x);
+        // debug(n);
+        cout << n + 1 << endl;
+        rr;
     }
-    sort(a.begin(), a.end());
-    ll l = 0, h = a[m - 1].ss;
 
-    while (l < h)
-    {
-        ll mid = l + (h - l + 1) / 2;
-        if (check(mid))
-            l = mid;
-        else
-            h = mid - 1;
-    }
-    cout << l << endl;
+    cout << ((n / num) * (num + 1)) << endl;
     rr;
-    // vll p(n + 1, 0);
-    // for (ll i = 1; i <= n; i++)
-    // {
-    // if (p[i] == 1)
-    // continue;
-    // p[i] = p[i - 1] + pre[i];
-    // }
 }
 int main()
 {
     io();
     // solve();
-    ll t = 1;
-    // ll t;
-    // cin >> t;
+    // ll t=1;
+    ll t;
+    cin >> t;
     while (t--)
     {
         solve();
     }
     // cerr << endl <<setprecision(20)<< double( clock() - startTime ) / (double)CLOCKS_PER_SEC<< " seconds." << endl;
-    // cout<<setprecision(10)
+    // cout<<fixed<<setprecision(10)<<ans<<endl;
+    // cout<<printf("%.8lf", hi)<<endl;
     return 0;
 }

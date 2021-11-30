@@ -10,10 +10,11 @@
 #define Endl endl
 #define ff first
 #define ss second
-#define all(X) (X).begin(), (X).end()
+// #define all(X) (X).begin(), (X).end()
 clock_t startTime = clock();
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
+#define all(v) v.begin(), v.end()
 #ifndef ONLINE_JUDGE
 #define debug(x) cerr << #x << " " << x << endl;
 #else
@@ -25,14 +26,11 @@ void io()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
-#ifndef ONLINE_JUDGE
-    freopen("socdist.in", "r", stdin);
-
-    freopen("socdist.out", "w", stdout);
-// freopen("input.txt", "r", stdin);
-// freopen("error.txt","w",stderr);
-// freopen("output.txt", "w", stdout);
-#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("input.txt", "r", stdin);
+    // freopen("error.txt","w",stderr);
+    // freopen("output.txt", "w", stdout);
+    // #endif
 }
 double PI = 4 * atan(1);
 ll mod = 1e9 + 7, mxn = 3e5 + 5;
@@ -92,6 +90,7 @@ ll binom(ll a, ll b)
     return (((fact[a] * inv(fact[b])) % mod * inv(fact[a - b])) % mod + mod) % mod;
 }
 // CONDITION && cout << "YES" || cout << "NO"; cout << '\n';
+// int a = count(all(s),'A');
 vector<int> sieveOfEratosthenes(int N)
 {
     bool primes[N + 1];
@@ -143,6 +142,7 @@ bool valid_coordinate(ll x, ll y, ll n, ll m)
     else
         return true;
 }
+
 int sod(int n)
 {
     int sum = 0;
@@ -158,80 +158,145 @@ bool isPowerOfTwo(ll n)
 {
     return n && (!(n & (n - 1)));
 }
-ll n, m;
-vpll a;
-bool check(ll val)
-{
-    ll ele = a[0].ff;
-    ll cnt = 1;
-    for (ll i = 0; i < m; i++)
-    {
-        if (ele + val <= a[i].ff)
-        {
-            ele = a[i].ff;
-            cnt++;
-        }
-        while (a[i].ss >= ele + val)
-        {
-            ele = ele + val;
-            cnt++;
-        }
-        // if (cnt >= n)
-        // return true;
-        // if(ele+val<a[i].ff)
-    }
-    return cnt >= n;
-    // return false;
-}
+// Find Min/Max
+// * Greedy/Brute Force
+// * DP
+// * BS
+
 void solve()
 {
-
-    cin >> n >> m;
-    a.resize(m);
-    // vll pre(n + 1, 0);
-    for (ll i = 0; i < m; i++)
+    ll n;
+    cin >> n;
+    ll sz = 2 * n;
+    ll half = n / 2;
+    vll b(sz);
+    map<ll, ll> m;
+    set<ll> s;
+    vll a1, a2;
+    for (ll i = 0; i < sz; i++)
     {
-        ll x, y;
-        cin >> x >> y;
-        a[i].ff = x;
-        a[i].ss = y;
-        // pre[x] = 1;
-        // pre[y + 1] = -1;
-        // a.pb(x);
-    }
-    sort(a.begin(), a.end());
-    ll l = 0, h = a[m - 1].ss;
-
-    while (l < h)
-    {
-        ll mid = l + (h - l + 1) / 2;
-        if (check(mid))
-            l = mid;
+        cin >> b[i];
+        if (i < n)
+            a1.pb(b[i]);
         else
-            h = mid - 1;
+            a2.pb(b[i]);
+        m[b[i]]++;
+        // s.insert(b[i]);
     }
-    cout << l << endl;
-    rr;
-    // vll p(n + 1, 0);
-    // for (ll i = 1; i <= n; i++)
+    if (n == 1)
+    {
+        if (b[0] == b[1])
+        {
+            cout << b[1] << endl;
+            rr;
+        }
+        cout << -1 << endl;
+        rr;
+    }
+    vll res;
+    // for (ll i = 0; i < n; i++)
+    for (auto i : m)
+    {
+        res.pb(i.ff);
+        // s.erase(s.begin());
+    }
+    if (res.size() < n || res.size() > n)
+    {
+        cout << -1
+             << endl;
+        rr;
+    }
+    ll mid = (n % 2 != 0 ? half : half - 1);
+    sort(b.begin(), b.end());
+    sort(a1.begin(), a1.end());
+    sort(res.begin(), res.end());
+    sort(a2.begin(), a2.end(), greater<>());
+    // for (auto i : a2)
     // {
-    // if (p[i] == 1)
-    // continue;
-    // p[i] = p[i - 1] + pre[i];
+    //     m2[a2[i]]++;
     // }
+    // deb(b);
+    // deb(a1);
+    // deb(a2);
+    // if (m[res[0]] != 2)
+    // {
+    //     cout << -1 << endl;
+    //     rr;
+    // }
+
+    if (m[res[mid]] != 3)
+    {
+        cout << -1 << endl;
+        rr;
+    }
+    if (m[res[n - 1]] != 1)
+    {
+        cout << -1 << endl;
+        rr;
+    }
+    // m[res[]]
+    for (auto i : m)
+    {
+        if (i.ff == res[mid])
+            continue;
+        if (i.ff == res[n - 1])
+            continue;
+        // if (i.ff == res[0])
+        //     continue;
+        if (i.ss != 2)
+        {
+            // debug(i.ff);
+            cout << -1 << endl;
+            rr;
+        }
+    }
+    // ll mid =
+    vll a;
+    // a.pb(a1[0]);
+    ll last = 0;
+    for (ll i = 0; i < n; i = i + 2)
+    {
+        last = a1[i];
+        a.pb(a1[i]);
+    }
+    // ll len=a.size()
+    vll a5;
+    // a.pb(a2[0]);
+    // ll val = a2[0];
+    for (ll i = 1; i < n; i = i + 2)
+    {
+        a5.pb(a2[i]);
+    }
+    // deb(a5);
+    // sort(a5.begin(), a5.end());
+    // for (ll i = 0; i < a5.size(); i++)
+    // {
+    //     if (a5[i] == last)
+    //         continue;
+    //     // last=a5[i];
+    //     a.pb(a5[i]);
+    // }
+    // a.pb(val);
+    for (ll i = 0; i < res.size(); i++)
+    {
+        cout << res[i] << " ";
+    }
+    cout << endl;
+    rr;
 }
 int main()
 {
     io();
     // solve();
-    ll t = 1;
-    // ll t;
-    // cin >> t;
+    // ll t=1;
+    ll t;
+    cin >> t;
     while (t--)
     {
         solve();
     }
     // cerr << endl <<setprecision(20)<< double( clock() - startTime ) / (double)CLOCKS_PER_SEC<< " seconds." << endl;
-    // cout<<setprecision(10)
+    // cout<<fixed<<setprecision(10)<<ans<<endl;
+    // cout<<printf("%.8lf", hi)<<endl;
     return 0;
 }
