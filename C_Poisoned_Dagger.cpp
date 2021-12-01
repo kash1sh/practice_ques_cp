@@ -163,58 +163,64 @@ bool isPowerOfTwo(ll n)
 // * DP
 // * BS
 
-vector<int> adj[100005];
-vector<bool> vis(100005, false);
-ll cnt = 0;
-void dfs(ll i)
+bool check(vll &a, ll h, ll mid)
 {
-    vis[i] = true;
-
-    for (auto node : adj[i])
+    ll cnt = 0;
+    for (ll i = 0; i < a.size(); i++)
     {
-        if (!vis[node])
+        // ll val = a[i];
+        ll newVal = a[i] + mid;
+        // cnt += mid;
+        if (i + 1 < a.size() && a[i + 1] < newVal)
         {
-            dfs(node);
+            cnt += a[i + 1] - a[i];
         }
+        else
+        // if (a[i + 1] >= newVal)
+        {
+            cnt += mid;
+        }
+        if (cnt >= h)
+            return true;
     }
+    return false;
 }
 void solve()
 {
-    ll n, m;
-    cin >> n >> m;
-
-    for (ll i = 0; i < m; i++)
+    ll n, h;
+    cin >> n >> h;
+    vll a(n);
+    for (ll i = 0; i < n; i++)
     {
-        ll x, y;
-        cin >> x >> y;
-        adj[x].pb(y);
-        adj[y].pb(x);
+        cin >> a[i];
     }
-    vll v;
-    cnt = 0;
-    for (ll i = 1; i <= n; i++)
+    // sort(a.begin(),a.end());
+
+    ll lo = 0, hi = 1e18;
+
+    while (lo < hi)
     {
-        if (!vis[i])
+        ll mid = lo + (hi - lo) / 2;
+
+        if (check(a, h, mid))
         {
-            dfs(i);
-            v.pb(i);
-            cnt++;
+            hi = mid;
+        }
+        else
+        {
+            lo = mid + 1;
         }
     }
-    cout << cnt - 1 << endl;
-    for (ll i = 1; i < v.size(); i++)
-    {
-        cout << v[i] << " " << v[i - 1] << Endl;
-    }
+    cout << lo << endl;
     rr;
 }
 int main()
 {
     io();
     // solve();
-    ll t = 1;
-    // ll t;
-    // cin >> t;
+    // ll t=1;
+    ll t;
+    cin >> t;
     while (t--)
     {
         solve();

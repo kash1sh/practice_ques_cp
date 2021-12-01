@@ -163,49 +163,32 @@ bool isPowerOfTwo(ll n)
 // * DP
 // * BS
 
-vector<int> adj[100005];
-vector<bool> vis(100005, false);
-ll cnt = 0;
-void dfs(ll i)
-{
-    vis[i] = true;
-
-    for (auto node : adj[i])
-    {
-        if (!vis[node])
-        {
-            dfs(node);
-        }
-    }
-}
 void solve()
 {
-    ll n, m;
-    cin >> n >> m;
+    ll n, t, k;
+    cin >> n >> t >> k;
 
-    for (ll i = 0; i < m; i++)
+    // cout << "? " << 1 << " " << n << endl;
+    // ll sum;
+    // cin >> sum;
+    ll lo = 1, hi = n;
+    while (lo < hi)
     {
-        ll x, y;
-        cin >> x >> y;
-        adj[x].pb(y);
-        adj[y].pb(x);
-    }
-    vll v;
-    cnt = 0;
-    for (ll i = 1; i <= n; i++)
-    {
-        if (!vis[i])
+        ll mid = (hi + lo) / 2;
+        cout << "? " << 1 << " " << mid << endl;
+        ll first;
+        cin >> first;
+        ll diff = mid - lo;
+        if (mid - first >= k)
         {
-            dfs(i);
-            v.pb(i);
-            cnt++;
+            hi = mid;
+        }
+        else
+        {
+            lo = mid + 1;
         }
     }
-    cout << cnt - 1 << endl;
-    for (ll i = 1; i < v.size(); i++)
-    {
-        cout << v[i] << " " << v[i - 1] << Endl;
-    }
+    cout << "! " << lo << endl;
     rr;
 }
 int main()

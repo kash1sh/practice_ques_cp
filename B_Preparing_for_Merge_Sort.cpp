@@ -163,50 +163,58 @@ bool isPowerOfTwo(ll n)
 // * DP
 // * BS
 
-vector<int> adj[100005];
-vector<bool> vis(100005, false);
-ll cnt = 0;
-void dfs(ll i)
-{
-    vis[i] = true;
-
-    for (auto node : adj[i])
-    {
-        if (!vis[node])
-        {
-            dfs(node);
-        }
-    }
-}
 void solve()
 {
-    ll n, m;
-    cin >> n >> m;
-
-    for (ll i = 0; i < m; i++)
+    ll n;
+    cin >> n;
+    vll a(n);
+    unordered_map<ll, ll> m;
+    for (ll i = 0; i < n; i++)
     {
-        ll x, y;
-        cin >> x >> y;
-        adj[x].pb(y);
-        adj[y].pb(x);
+        cin >> a[i];
+        m[a[i]]++;
     }
-    vll v;
-    cnt = 0;
-    for (ll i = 1; i <= n; i++)
+
+    for (auto i : m)
     {
-        if (!vis[i])
+        debug(i.ff);
+    }
+    ll cnt = 0;
+    for (auto i : m)
+    {
+        bool f = true;
+        vll v;
+        ll maxa = 0;
+        if (f)
         {
-            dfs(i);
-            v.pb(i);
+            maxa = a[i];
+            v.pb(a[i]);
+            f = !f;
             cnt++;
         }
+
+        else if (a[i] > maxa)
+        {
+            v.pb(a[i]);
+            cnt++;
+        }
+
+        if (i == n - 1)
+        {
+            if (cnt == n - 1)
+            {
+                rr;
+            }
+            else
+            {
+                for (auto j : v)
+                {
+                    cout << j << " ";
+                }
+                cout << endl;
+            }
+        }
     }
-    cout << cnt - 1 << endl;
-    for (ll i = 1; i < v.size(); i++)
-    {
-        cout << v[i] << " " << v[i - 1] << Endl;
-    }
-    rr;
 }
 int main()
 {
