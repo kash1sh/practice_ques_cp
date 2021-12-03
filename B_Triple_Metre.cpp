@@ -21,7 +21,7 @@
     for (auto i : A)      \
         cout << i << " "; \
     cout << '\n';
-// #define endl "\n"
+#define endl "\n"
 clock_t startTime = clock();
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
@@ -174,74 +174,55 @@ bool isPowerOfTwo(ll n)
 // * Greedy/Brute Force
 // * DP
 // * BS
+int isSubstring(string s1, string s2)
+{
+    int M = s1.length();
+    int N = s2.length();
+
+    /* A loop to slide pat[] one by one */
+    for (int i = 0; i <= N - M; i++)
+    {
+        int j;
+
+        /* For current index i, check for
+ pattern match */
+        for (j = 0; j < M; j++)
+            if (s2[i + j] != s1[j])
+                break;
+
+        if (j == M)
+            return i;
+    }
+
+    return -1;
+}
 void solve()
 {
-    ll n;
-    cin >> n;
-    vll a(n);
-    map<ll, ll> m;
-    vector<bool> pre(1e6 + 5, false);
-    for (ll i = 0; i < n; i++)
-    {
-        cin >> a[i];
-        pre[a[i]] = true;
-        // m[a[i]]++;
-    }
-    sort(a.begin(), a.end());
-    vll v1, v2;
-    ll sum = 0;
-    ll cnt = n / 2;
-    // for (ll i = 1; i < n; i++)
-    // {
-    //     for (ll j = 0; j < i; j++)
-    //     {
+    string s;
+    cin >> s;
 
-    //         if (m[a[i] % a[j]] == 0)
-    //         {
-    //             // v1.pb(a[i]);
-    //             // v2.pb(a[j]);
-    //             cout << a[i] << " " << a[j] << Endl;
-    //             sum++;
-    //         }
-    //         if (sum >= n / 2)
-    //             rr;
-    //     }
-    //     if (sum >= n / 2)
-    //         rr;
-    // }
-
-    for (ll i = 1; i < n; i++)
+    if (s == "o" || s == "ox" || s == "oxx" || s == "xo")
     {
-        for (ll j = 0; j < i; j++)
-        {
-
-            // if (m[a[i] % a[j]] == 0)
-            if (pre[a[i] % a[j]] == false)
-                v1.pb(a[i]), v2.pb(a[j]);
-            // sum++,
-            // v.pb({a[i], a[j]});
-            // v1.pb(a[i]), v2.pb(a[j]);
-            if (v1.size() >= (n / 2))
-                // rr;
-                break;
-        }
-        if (v1.size() >= (n / 2))
-            // rr;
-            break;
+        Yes;
+        rr;
     }
-    // deb(v1);
-    for (ll i = 0; i < v1.size(); i++)
+    if (isSubstring(s, "oxxoxxoxxoxx") == -1)
     {
-        cout << v1[i] << " " << v2[i] << endl;
+        // Yes;
+        No;
+        rr;
     }
+    // No;
+    Yes;
+    rr;
 }
 int main()
 {
     io();
     // solve();
-    // ll t=1;
-    ll t;
-    cin >> t;
+    ll t = 1;
+    // ll t;
+    // cin >> t;
     while (t--)
     {
         solve();

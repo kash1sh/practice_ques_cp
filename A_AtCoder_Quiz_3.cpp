@@ -21,7 +21,7 @@
     for (auto i : A)      \
         cout << i << " "; \
     cout << '\n';
-// #define endl "\n"
+#define endl "\n"
 clock_t startTime = clock();
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
@@ -174,74 +174,36 @@ bool isPowerOfTwo(ll n)
 // * Greedy/Brute Force
 // * DP
 // * BS
+
 void solve()
 {
     ll n;
     cin >> n;
-    vll a(n);
-    map<ll, ll> m;
-    vector<bool> pre(1e6 + 5, false);
-    for (ll i = 0; i < n; i++)
+    if (n == 1)
     {
-        cin >> a[i];
-        pre[a[i]] = true;
-        // m[a[i]]++;
+        cout << "AGC001" << endl;
+        rr;
     }
-    sort(a.begin(), a.end());
-    vll v1, v2;
-    ll sum = 0;
-    ll cnt = n / 2;
-    // for (ll i = 1; i < n; i++)
-    // {
-    //     for (ll j = 0; j < i; j++)
-    //     {
-
-    //         if (m[a[i] % a[j]] == 0)
-    //         {
-    //             // v1.pb(a[i]);
-    //             // v2.pb(a[j]);
-    //             cout << a[i] << " " << a[j] << Endl;
-    //             sum++;
-    //         }
-    //         if (sum >= n / 2)
-    //             rr;
-    //     }
-    //     if (sum >= n / 2)
-    //         rr;
-    // }
-
-    for (ll i = 1; i < n; i++)
+    if (n < 10)
     {
-        for (ll j = 0; j < i; j++)
-        {
-
-            // if (m[a[i] % a[j]] == 0)
-            if (pre[a[i] % a[j]] == false)
-                v1.pb(a[i]), v2.pb(a[j]);
-            // sum++,
-            // v.pb({a[i], a[j]});
-            // v1.pb(a[i]), v2.pb(a[j]);
-            if (v1.size() >= (n / 2))
-                // rr;
-                break;
-        }
-        if (v1.size() >= (n / 2))
-            // rr;
-            break;
+        cout << "AGC00" << n << endl;
+        rr;
     }
-    // deb(v1);
-    for (ll i = 0; i < v1.size(); i++)
+    if (n < 42)
     {
-        cout << v1[i] << " " << v2[i] << endl;
+        cout << "AGC0" << n << endl;
+        rr;
     }
+    cout << "AGC0" << n + 1 << endl;
+    rr;
 }
 int main()
 {
     io();
     // solve();
-    // ll t=1;
-    ll t;
-    cin >> t;
+    ll t = 1;
+    // ll t;
+    // cin >> t;
     while (t--)
     {
         solve();

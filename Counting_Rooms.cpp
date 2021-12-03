@@ -21,7 +21,7 @@
     for (auto i : A)      \
         cout << i << " "; \
     cout << '\n';
-// #define endl "\n"
+#define endl "\n"
 clock_t startTime = clock();
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
@@ -174,74 +174,65 @@ bool isPowerOfTwo(ll n)
 // * Greedy/Brute Force
 // * DP
 // * BS
+ll n, m;
+char grid[1001][1001];
+bool vis[1001][1001];
+ll cnt = 0;
+int dr[4] = {0, 0, -1, 1};
+int dc[4] = {-1, 1, 0, 0};
+void floodfill(ll r, ll c, ll color)
+{
+    if (!valid_coordinate(r, c, n, m))
+        return;
+    if (vis[r][c])
+        return;
+    if (grid[r][c] != color)
+    {
+        return;
+    }
+    vis[r][c] = true;
+    // floodfill(r, c - 1, color);
+    // floodfill(r, c + 1, color);
+    // floodfill(r - 1, c, color);
+    // floodfill(r + 1, c, color);
+    for (ll i = 0; i < 4; i++)
+    {
+        floodfill(r + dr[i], c + dc[i], color);
+    }
+}
 void solve()
 {
-    ll n;
-    cin >> n;
-    vll a(n);
-    map<ll, ll> m;
-    vector<bool> pre(1e6 + 5, false);
+    cin >> n >> m;
+
     for (ll i = 0; i < n; i++)
     {
-        cin >> a[i];
-        pre[a[i]] = true;
-        // m[a[i]]++;
-    }
-    sort(a.begin(), a.end());
-    vll v1, v2;
-    ll sum = 0;
-    ll cnt = n / 2;
-    // for (ll i = 1; i < n; i++)
-    // {
-    //     for (ll j = 0; j < i; j++)
-    //     {
-
-    //         if (m[a[i] % a[j]] == 0)
-    //         {
-    //             // v1.pb(a[i]);
-    //             // v2.pb(a[j]);
-    //             cout << a[i] << " " << a[j] << Endl;
-    //             sum++;
-    //         }
-    //         if (sum >= n / 2)
-    //             rr;
-    //     }
-    //     if (sum >= n / 2)
-    //         rr;
-    // }
-
-    for (ll i = 1; i < n; i++)
-    {
-        for (ll j = 0; j < i; j++)
+        for (ll j = 0; j < m; j++)
         {
-
-            // if (m[a[i] % a[j]] == 0)
-            if (pre[a[i] % a[j]] == false)
-                v1.pb(a[i]), v2.pb(a[j]);
-            // sum++,
-            // v.pb({a[i], a[j]});
-            // v1.pb(a[i]), v2.pb(a[j]);
-            if (v1.size() >= (n / 2))
-                // rr;
-                break;
+            cin >> grid[i][j];
         }
-        if (v1.size() >= (n / 2))
-            // rr;
-            break;
     }
-    // deb(v1);
-    for (ll i = 0; i < v1.size(); i++)
+
+    for (ll i = 0; i < n; i++)
     {
-        cout << v1[i] << " " << v2[i] << endl;
+        for (ll j = 0; j < m; j++)
+        {
+            if (!vis[i][j] && grid[i][j] == '.')
+            {
+                cnt++;
+                floodfill(i, j, grid[i][j]);
+            }
+        }
     }
+    cout << cnt << endl;
+    rr;
 }
 int main()
 {
     io();
     // solve();
-    // ll t=1;
-    ll t;
-    cin >> t;
+    ll t = 1;
+    // ll t;
+    // cin >> t;
     while (t--)
     {
         solve();

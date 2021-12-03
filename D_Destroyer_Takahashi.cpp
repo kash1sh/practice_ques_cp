@@ -21,7 +21,7 @@
     for (auto i : A)      \
         cout << i << " "; \
     cout << '\n';
-// #define endl "\n"
+#define endl "\n"
 clock_t startTime = clock();
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
@@ -64,7 +64,7 @@ ll mul(ll a, ll b, ll mod)
 bool sortbysecdesc(const pair<int, int> &a,
                    const pair<int, int> &b)
 {
-    return a.second > b.second;
+    return a.second < b.second;
 }
 bool check_sorted(vll a)
 {
@@ -174,74 +174,63 @@ bool isPowerOfTwo(ll n)
 // * Greedy/Brute Force
 // * DP
 // * BS
+
+bool check(vpll &v, ll d, ll mid)
+{
+    ll cnt = 0;
+    for (ll i = 0; i < v.size(); i++)
+    {
+        bool f = true;
+        ll mini = v[i].ff;
+        ll maxa = v[i].ss;
+
+        while (i + 1 < v.size() && v[i + 1].ff < maxa + d)
+            f = false, i++;
+        // if()
+        cnt++;
+
+        if (cnt > mid)
+            return false;
+    }
+    return true;
+}
+
 void solve()
 {
-    ll n;
-    cin >> n;
-    vll a(n);
-    map<ll, ll> m;
-    vector<bool> pre(1e6 + 5, false);
+    ll n, d;
+    cin >> n >> d;
+    vpll v(n);
+
     for (ll i = 0; i < n; i++)
     {
-        cin >> a[i];
-        pre[a[i]] = true;
-        // m[a[i]]++;
+        cin >> v[i].ff >> v[i].ss;
     }
-    sort(a.begin(), a.end());
-    vll v1, v2;
-    ll sum = 0;
-    ll cnt = n / 2;
-    // for (ll i = 1; i < n; i++)
-    // {
-    //     for (ll j = 0; j < i; j++)
-    //     {
+    sort(v.begin(), v.end(), sortbysecdesc);
 
-    //         if (m[a[i] % a[j]] == 0)
-    //         {
-    //             // v1.pb(a[i]);
-    //             // v2.pb(a[j]);
-    //             cout << a[i] << " " << a[j] << Endl;
-    //             sum++;
-    //         }
-    //         if (sum >= n / 2)
-    //             rr;
-    //     }
-    //     if (sum >= n / 2)
-    //         rr;
-    // }
+    ll lo = 1, hi = 1e9;
 
-    for (ll i = 1; i < n; i++)
+    while (lo < hi)
     {
-        for (ll j = 0; j < i; j++)
+        ll mid = lo + (hi - lo) / 2;
+        if (check(v, d, mid))
         {
-
-            // if (m[a[i] % a[j]] == 0)
-            if (pre[a[i] % a[j]] == false)
-                v1.pb(a[i]), v2.pb(a[j]);
-            // sum++,
-            // v.pb({a[i], a[j]});
-            // v1.pb(a[i]), v2.pb(a[j]);
-            if (v1.size() >= (n / 2))
-                // rr;
-                break;
+            hi = mid;
         }
-        if (v1.size() >= (n / 2))
-            // rr;
-            break;
+        else
+        {
+            lo = mid + 1;
+        }
     }
-    // deb(v1);
-    for (ll i = 0; i < v1.size(); i++)
-    {
-        cout << v1[i] << " " << v2[i] << endl;
-    }
+    cout << lo << endl;
+    rr;
 }
 int main()
 {
     io();
     // solve();
-    // ll t=1;
-    ll t;
-    cin >> t;
+    ll t = 1;
+    // ll t;
+    // cin >> t;
     while (t--)
     {
         solve();
