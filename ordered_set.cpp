@@ -56,6 +56,10 @@ int main()
     st.insert(6);
 
     cout << st.order_of_key(6);
+    // for (auto i : st)
+    // {
+    // cout << i << " ";
+    // }
     cout << endl;
 
     return 0;

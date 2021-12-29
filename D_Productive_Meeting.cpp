@@ -172,29 +172,29 @@ void solve()
         cin >> a[i];
         s.insert({a[i], i});
     }
-    // for (auto i : s)
-    // {
-    //     cout << i.ff << " " << i.ss << endl;
-    // }
+    // sort(v.begin(), v.end());
     ll cnt = 0;
     vpll vv;
-    ll ct = 0;
-    while (s.size())
+    // ll ct = 0;
+
+    while (s.size() > 1)
     {
 
-        ct++;
-
-        //     // auto val = s.begin();
         pair<ll, ll> num = *(s.begin());
-
         s.erase(s.begin());
         if (s.size() == 0)
             break;
+        if (num.ff == 0)
+            continue;
         pair<ll, ll> nu = *(s.rbegin());
         s.erase(--s.end());
-        if (s.size() == 0)
-            break;
-        // //     // v.pb({num.ss, nu.ss});
+        // if (s.size() == 0)
+        // break;
+        // if (num.ff == 0)
+        // {
+        //     num = *(s.begin());
+        //     s.erase(s.begin());
+        // }
         pair<ll, ll> vec;
         vec.ff = num.ss;
         vec.ss = nu.ss;
@@ -214,7 +214,7 @@ void solve()
     cout << cnt << endl;
     for (ll i = 0; i < vv.size(); i++)
     {
-        cout << vv[i].ff << " " << vv[i].ss << endl;
+        cout << vv[i].ff + 1 << " " << vv[i].ss + 1 << endl;
     }
     rr;
 }

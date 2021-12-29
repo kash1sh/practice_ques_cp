@@ -1,0 +1,1 @@
+{"name":"Local: Newtom","url":"c:\\Users\\kashi\\Desktop\\cf\\Practice_Ques\\Newtom.cpp","tests":[{"id":1640705719043,"input":"1\n1 3 3","output":"AC"},{"id":1640707752134,"input":"2\n1 3 1\n3 5 1","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\kashi\\Desktop\\cf\\Practice_Ques\\Newtom.cpp","group":"local","local":true}
