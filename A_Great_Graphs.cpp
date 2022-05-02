@@ -377,41 +377,51 @@ void solve()
     {
         cin >> a[i];
     }
-    if (n == 2)
-    {
-        if (a[1] > 0)
-        {
-            cout << 0 << endl;
-            rr;
-        }
-        cout << a[1] << endl;
-        rr;
-    }
-    ll maxa = *max_element(a.begin(), a.end());
-    ll maxa2 = *min_element(a.begin(), a.end());
-    ll sum = 0;
-    if (maxa > abs(maxa2))
-    {
-        sum = -maxa;
-    }
-    else
-    {
-        maxa = *min_element(a.begin(), a.end());
-        sum = maxa;
-    }
+    // if (n == 2)
+    // {
+    //     if (a[1] > 0)
+    //     {
+    //         cout << 0 << endl;
+    //         rr;
+    //     }
+    //     cout << a[1] << endl;
+    //     rr;
+    // }
+    // ll maxa = *max_element(a.begin(), a.end());
+    // ll maxa2 = *min_element(a.begin(), a.end());
+    // ll sum = 0;
+    // if (maxa > abs(maxa2))
+    // {
+    //     sum = -maxa;
+    // }
+    // else
+    // {
+    //     maxa = *min_element(a.begin(), a.end());
+    //     sum = maxa;
+    // }
 
-    for (ll i = 0; i < n; i++)
+    // for (ll i = 0; i < n; i++)
+    // {
+    //     // if (a[i] == maxa)
+    //     // continue;
+    //     if (a[i] < 0)
+    //     {
+    //         sum += a[i];
+    //     }
+    //     // else
+    //     // {
+    //     //     sum += -a[i];
+    //     // }
+    // }
+    sort(a.begin(), a.end());
+    ll sum = a[n - 1];
+    vll neg(n);
+    neg[0] = 0;
+    for (ll i = 1; i < n; i++)
     {
-        // if (a[i] == maxa)
-        // continue;
-        if (a[i] < 0)
-        {
-            sum += a[i];
-        }
-        // else
-        // {
-        //     sum += -a[i];
-        // }
+
+        neg[i] = neg[i - 1] + i * (a[i] - a[i - 1]);
+        sum -= neg[i];
     }
     cout << sum << endl;
     rr;

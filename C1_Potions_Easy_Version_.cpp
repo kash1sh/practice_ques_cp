@@ -468,23 +468,16 @@ void solve()
     ll cnt = 0;
     for (ll i = 0; i < n; i++)
     {
-        if (a[i] < 0)
-        {
-            s.insert(-1 * a[i]);
-        }
         sum += a[i];
-        cnt++;
-
+        s.insert(a[i]);
         while (sum < 0)
         {
-            ll front = *s.rbegin();
-            sum += front;
-            s.erase(s.find(*s.rbegin()));
-
-            cnt--;
+            ll front = *s.begin();
+            sum -= front;
+            s.erase(s.begin());
         }
     }
-    cout << cnt << endl;
+    cout << s.size() << endl;
     return;
 }
 int main()

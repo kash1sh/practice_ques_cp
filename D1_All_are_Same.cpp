@@ -7,10 +7,23 @@
 #define fo(i, k, n) for (ll i = k; i < n; i++)
 #define fo1(i, k, n) for (ll i = k; i <= n; i++)
 #define rr return
-#define Endl endl
 #define ff first
 #define ss second
-// #define all(X) (X).begin(), (X).end()
+#define llmin LONG_MIN
+#define llmax LONG_MAX
+#define Yes cout << "Yes\n"
+#define No cout << "No\n"
+#define YES cout << "YES\n"
+#define NO cout << "NO\n"
+#define yes cout << "yes\n"
+#define no cout << "no\n"
+
+#define show(A)           \
+    for (auto i : A)      \
+        cout << i << " "; \
+    cout << '\n';
+#define endl "\n"
+#define Endl endl
 clock_t startTime = clock();
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
@@ -26,6 +39,7 @@ void io()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    cout.tie(0);
     // #ifndef ONLINE_JUDGE
     // freopen("input.txt", "r", stdin);
     // freopen("error.txt","w",stderr);
@@ -34,6 +48,8 @@ void io()
 }
 double PI = 4 * atan(1);
 ll mod = 1e9 + 7, mxn = 3e5 + 5;
+const int dx[4] = {1, -1, 0, 0};
+const int dy[4] = {0, 0, -1, 1};
 void deb(vector<ll> v)
 {
     for (auto t : v)
@@ -53,17 +69,6 @@ bool sortbysecdesc(const pair<int, int> &a,
                    const pair<int, int> &b)
 {
     return a.second > b.second;
-}
-bool check_sorted(vll a)
-{
-    ll n = a.size();
-    for (ll i = 1; i < n; i++)
-    {
-        if (a[i] >= a[i - 1])
-            continue;
-        return false;
-    }
-    return true;
 }
 vll fact(2e5 + 5, 1);
 ll binPow(ll a, ll b)
@@ -110,48 +115,32 @@ vector<int> sieveOfEratosthenes(int N)
 
     return arr;
 }
-void prime_fact(ll n, vector<ll> &res)
+vector<int> primeFactors(int n)
 {
-    while (n % 2 == 0)
+    vector<int> f;
+    for (int x = 2; x * x <= n; x++)
     {
-        res.pb(2);
-        n = n / 2;
-    }
-
-    for (ll i = 3; i <= sqrt(n); i = i + 2)
-    {
-        while (n % i == 0)
+        while (n % x == 0)
         {
-            res.pb(i);
-            n = n / i;
+            f.push_back(x);
+            n /= x;
         }
     }
-    if (n > 2)
-    {
-        res.pb(n);
-    }
-}
-bool valid_coordinate(ll x, ll y, ll n, ll m)
-{
-    if (x < 0 || y < 0)
-        return false;
-
-    else if (x >= n || y >= m)
-        return false;
-
-    else
-        return true;
+    if (n > 1)
+        f.push_back(n);
+    return f;
 }
 
-int sod(int n)
+bool isPrime(ll n)
 {
-    int sum = 0;
-    while (n)
+    if (n < 2)
+        return false;
+    for (ll x = 2; x * x <= n; x++)
     {
-        sum += (n % 10);
-        n /= 10;
+        if (n % x == 0)
+            return false;
     }
-    return sum;
+    return true;
 }
 
 bool isPowerOfTwo(ll n)
@@ -160,64 +149,82 @@ bool isPowerOfTwo(ll n)
 }
 // Find Min/Max
 // * Greedy/Brute Force
-// * DP
+//* Prefix array of max/min
 // * BS
-
+// * DP/KNPS
 void solve()
 {
     ll n;
     cin >> n;
     vll a(n);
     set<ll> s;
-    set<ll> sm;
+
     for (ll i = 0; i < n; i++)
     {
         cin >> a[i];
-        sm.insert(a[i]);
+        s.insert((a[i]));
     }
-    sort(a.begin(), a.end());
-    if (sm.size() == 1)
+    vll v;
+    for (auto i : s)
+    {
+        v.pb(i);
+    }
+    if (v.size() == 1)
     {
         cout << -1 << endl;
         rr;
     }
-    // if (sm.size() == 2)
+    sort(v.begin(), v.end());
+    // if(v.size()==2){
+    // if (v[0] < 0)
     // {
-    //     cout << (abs(*(--sm.end())) + abs(*sm.begin())) << endl;
+    //     if (v[1] < 0)
+    //     {
+    //         cout << abs(v[1] - v[0]) << endl;
+    //         rr;
+    //     }
+    //     // cout<<v[1]-v[0]<<endl;
+    //     // rr;
+    // }
+    // cout << v[1] - v[0] << endl;
+    ll val = 0;
+    for (ll i = 1; i < v.size(); i++)
+    {
+        val = __gcd(val, v[i] - v[i - 1]);
+    }
+    cout << val << endl;
+    rr;
+    // }
+
+    // ll val = a[0];
+    // ll cnt = 1;
+    // for (ll i = 1; i < n; i++)
+    // {
+    //     if (a[i] == val)
+    //         cnt++;
+    // }
+    // if (cnt == n)
+    // {
+    //     cout << -1 << endl;
     //     rr;
     // }
-    vll b;
+    // sort(a.begin(), a.end());
+    // map<ll, ll> m;
 
-    for (ll i = 0; i < n; i++)
-    {
-        for (ll j = i + 1; j < n; j++)
-        {
-            if (a[i] == a[j])
-                continue;
-            s.insert(abs(a[i] - a[j]));
-        }
-    }
-
-    ll gc = 0;
-    // for (ll i = 0; i < n - 1; i++)
+    // for (ll i = 1; i < n; i++)
     // {
-    //     gc = __gcd(gc, a[i + 1] - a[i]);
+    //     m[a[i] - a[i - 1]]++;
     // }
-    // ll g
-    // for(auto i in s){
-    while (s.size())
-    {
-        // gc==__gcd(gc,--s.end());
-        gc = __gcd(gc, *s.rbegin());
-        s.erase(--s.end());
-    }
-    cout << gc << endl;
-    rr;
-    // for(auto i in s)
-    // {
 
+    // ll maxa = LONG_MIN;
+
+    // for (auto i : m)
+    // {
+    //     // cout << i.ff << endl;
+    //     maxa = max(maxa, i.ff);
     // }
-    // for()
+    // cout << maxa << endl;
+    // rr;
 }
 int main()
 {
@@ -231,7 +238,9 @@ int main()
         solve();
     }
     // cerr << endl <<setprecision(20)<< double( clock() - startTime ) / (double)CLOCKS_PER_SEC<< " seconds." << endl;
+
     // cout<<fixed<<setprecision(10)<<ans<<endl;
+
     // cout<<printf("%.8lf", hi)<<endl;
     return 0;
 }

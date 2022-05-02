@@ -407,15 +407,38 @@ void solve()
 
     for (ll i = 0; i < n; i++)
     {
-        cin >> a[i].ss;
+        cin >> a[i].ff;
     }
     for (ll i = 0; i < n; i++)
     {
-        cin >> a[i].ff;
+        cin >> a[i].ss;
     }
     // sort(a.begin(), a.end());
     ll sum = 0, maxa = LONG_MIN;
-
+    sort(a.begin(), a.end(), greater<>());
+    // for (auto i : a)
+    // {
+    //     cout << i.ff << " " << i.ss << endl;
+    // }
+    ll pre = 0;
+    for (ll i = 0; i < n; i++)
+    {
+        // pre+=a[i].ss;
+        if (a[i].ff >= pre + a[i].ss)
+        {
+            pre += a[i].ss;
+            // debug(a[i].ss);
+            // debug(pre);
+            sum = pre;
+        }
+        else
+        {
+            sum = max(sum, a[i].ff);
+            break;
+        }
+    }
+    cout << sum << endl;
+    rr;
     // for (ll i = 0; i < n; i++)
     // {
     //     sum += a[i].ff;

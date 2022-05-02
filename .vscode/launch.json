@@ -5,6 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "Launch bookshop",
+      "request": "launch",
+      "mainClass": "bookshop",
+      "projectName": "Practice_Ques_cd6edc6d"
+    },
+    {
+      "type": "java",
+      "name": "Launch bookShop",
+      "request": "launch",
+      "mainClass": "bookShop",
+      "projectName": "Practice_Ques_cd6edc6d"
+    },
+    {
       "name": "g++.exe - Build and debug active file",
       "type": "cppdbg",
       "request": "launch",

@@ -166,57 +166,94 @@ void solve()
     ll n;
     cin >> n;
     vll a(n);
-    multiset<pair<ll, ll>> s;
+    multiset<pair<ll, ll>> ms;
     for (ll i = 0; i < n; i++)
     {
         cin >> a[i];
-        s.insert({a[i], i});
+        ms.insert({a[i], i + 1});
     }
-    // sort(v.begin(), v.end());
-    ll cnt = 0;
-    vpll vv;
-    // ll ct = 0;
 
-    while (s.size() > 1)
+    vpll v;
+
+    while (ms.size())
     {
-
-        pair<ll, ll> num = *(s.begin());
-        s.erase(s.begin());
-        if (s.size() == 0)
+        pair<ll, ll> val = *ms.rbegin();
+        ms.erase(*ms.rbegin());
+        debug(val.ff);
+        if (ms.size() == 0)
             break;
-        if (num.ff == 0)
-            continue;
-        pair<ll, ll> nu = *(s.rbegin());
-        s.erase(--s.end());
-        // if (s.size() == 0)
-        // break;
-        // if (num.ff == 0)
-        // {
-        //     num = *(s.begin());
-        //     s.erase(s.begin());
-        // }
-        pair<ll, ll> vec;
-        vec.ff = num.ss;
-        vec.ss = nu.ss;
-        vv.pb(vec);
-        cnt++;
-        nu.ff--;
-        num.ff--;
-        if (nu.ff > 0)
-        {
-            s.insert({nu.ff, nu.ss});
-        }
-        if (num.ff > 0)
-        {
-            s.insert({num.ff, num.ss});
-        }
+
+        pair<ll, ll> val2 = *ms.rbegin();
+        ms.erase(*ms.rbegin());
+        debug(val2.ff);
+        if (val.ff > 0 && val2.ff > 0)
+            v.pb({val.ss, val2.ss});
+        val.ff--;
+        val2.ff--;
+        if (val.ff > 0)
+            ms.insert({val.ff, val.ss});
+        if (val2.ff > 0)
+            ms.insert({val2.ff, val2.ss});
     }
-    cout << cnt << endl;
-    for (ll i = 0; i < vv.size(); i++)
+
+    cout << v.size() << endl;
+    for (auto i : v)
     {
-        cout << vv[i].ff + 1 << " " << vv[i].ss + 1 << endl;
+        cout << i.ff << " " << i.ss << endl;
     }
     rr;
+
+    // multiset<pair<ll, ll>> s;
+    // for (ll i = 0; i < n; i++)
+    // {
+    //     cin >> a[i];
+    //     s.insert({a[i], i});
+    // }
+    // // sort(v.begin(), v.end());
+    // ll cnt = 0;
+    // vpll vv;
+    // // ll ct = 0;
+
+    // while (s.size() > 1)
+    // {
+
+    //     pair<ll, ll> num = *(s.begin());
+    //     s.erase(s.begin());
+    //     if (s.size() == 0)
+    //         break;
+    //     if (num.ff == 0)
+    //         continue;
+    //     pair<ll, ll> nu = *(s.rbegin());
+    //     s.erase(--s.end());
+    //     // if (s.size() == 0)
+    //     // break;
+    //     // if (num.ff == 0)
+    //     // {
+    //     //     num = *(s.begin());
+    //     //     s.erase(s.begin());
+    //     // }
+    //     pair<ll, ll> vec;
+    //     vec.ff = num.ss;
+    //     vec.ss = nu.ss;
+    //     vv.pb(vec);
+    //     cnt++;
+    //     nu.ff--;
+    //     num.ff--;
+    //     if (nu.ff > 0)
+    //     {
+    //         s.insert({nu.ff, nu.ss});
+    //     }
+    //     if (num.ff > 0)
+    //     {
+    //         s.insert({num.ff, num.ss});
+    //     }
+    // }
+    // cout << cnt << endl;
+    // for (ll i = 0; i < vv.size(); i++)
+    // {
+    //     cout << vv[i].ff + 1 << " " << vv[i].ss + 1 << endl;
+    // }
+    // rr;
 }
 int main()
 {

@@ -1,0 +1,281 @@
+
+#include <bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define vll vector<ll>
+#define vpll vector<pair<ll, ll>>
+#define fo(i, k, n) for (ll i = k; i < n; i++)
+#define fo1(i, k, n) for (ll i = k; i <= n; i++)
+#define rr return
+#define ff first
+#define ss second
+#define Auto auto
+#define llmin LONG_MIN
+#define llmax LONG_MAX
+#define Yes cout << "Yes\n"
+#define No cout << "No\n"
+#define YES cout << "YES\n"
+#define NO cout << "NO\n"
+#define yes cout << "yes\n"
+#define no cout << "no\n"
+
+#define show(A)           \
+    for (auto i : A)      \
+        cout << i << " "; \
+    cout << '\n';
+#define endl "\n"
+#define Endl endl
+clock_t startTime = clock();
+#define setbits(x) __builtin_popcountll(x)
+#define zrobits(x) __builtin_ctzll(x)
+#define all(v) v.begin(), v.end()
+#define pi 3.141592653589793238
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr << #x << " " << x << endl;
+#else
+#define debug(x)
+#endif
+using namespace std;
+
+typedef vector<vector<long long>> vvll;
+
+void io()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    // #ifndef ONLINE_JUDGE
+    // freopen("input.txt", "r", stdin);
+    // freopen("error.txt","w",stderr);
+    // freopen("output.txt", "w", stdout);
+    // #endif
+}
+double PI = 4 * atan(1);
+ll mod = 1e9 + 7, mxn = 3e5 + 5;
+int dx[4] = {-1, 0, 1, 0};
+int dy[4] = {0, 1, 0, -1};
+void deb(vector<ll> v)
+{
+    for (auto t : v)
+        cerr << t << " ";
+    cerr << "\n";
+}
+ll mul(ll a, ll b, ll mod)
+{
+    a %= mod;
+    b %= mod;
+    a *= b;
+    a += mod;
+    return a % mod;
+}
+
+bool sortbysecdesc(const pair<int, int> &a,
+                   const pair<int, int> &b)
+{
+    return a.second > b.second;
+}
+string decToBinary(int n)
+{
+    string s = "";
+    int i = 0;
+    while (n > 0)
+    {
+        s = to_string(n % 2) + s;
+        n = n / 2;
+        i++;
+    }
+    return s;
+}
+vll fact(2e5 + 5, 1);
+ll binPow(ll a, ll b)
+{
+    if (b == 0)
+        return 1;
+    if (b == 1)
+        return a;
+    ll ret = binPow(a, b / 2);
+    if (b % 2 == 0)
+        return (ret * ret) % mod;
+    return ((ret * ret) % mod * a) % mod;
+}
+ll inv(ll a)
+{
+    return (binPow(a, mod - 2) % mod + mod) % mod;
+}
+ll binom(ll a, ll b)
+{
+    // before t
+    //  for (int i = 1;i<=2e5;i++)fact[i] = (i * fact[i - 1])%mod;
+    if (b < 0 or a < 0)
+        return 0;
+    return (((fact[a] * inv(fact[b])) % mod * inv(fact[a - b])) % mod + mod) % mod;
+}
+// CONDITION && cout << "YES" || cout << "NO"; cout << '\n';
+// int a = count(all(s),'A');
+vector<int> sieveOfEratosthenes(int N)
+{
+    bool primes[N + 1];
+    memset(primes, true, sizeof(primes));
+    vector<int> arr;
+
+    for (int i = 2; i * i <= N; i++)
+        if (primes[i] == true)
+        {
+            for (int j = i * i; j <= N; j += i)
+                primes[j] = false;
+        }
+
+    for (int i = 2; i <= N; i++)
+        if (primes[i])
+            arr.emplace_back(i);
+
+    return arr;
+}
+vector<int> primeFactors(int n)
+{
+    vector<int> f;
+    for (int x = 2; x * x <= n; x++)
+    {
+        while (n % x == 0)
+        {
+            f.push_back(x);
+            n /= x;
+        }
+    }
+    if (n > 1)
+        f.push_back(n);
+    return f;
+}
+
+bool isPrime(ll n)
+{
+    if (n < 2)
+        return false;
+    for (ll x = 2; x * x <= n; x++)
+    {
+        if (n % x == 0)
+            return false;
+    }
+    return true;
+}
+
+bool isPowerOfTwo(ll n)
+{
+    return n && (!(n & (n - 1)));
+}
+/*
+vector<ll>adj[100005];
+bool vis[100005];
+ll dist[100005];
+void bfs(ll c)
+{
+  vis[c]=true;
+  dist[c]=0;
+  queue<ll>q;
+  q.push(c);
+while(!q.empty())
+{
+    ll x=q.front();
+    q.pop();
+
+    for(auto y:adj[x])
+    {
+        if(!vis[y])
+        {
+            vis[y]=true;
+            dist[y]=dist[x]+1;
+
+            q.push(y);
+        }
+    }
+
+}
+}
+*/
+bool isPalindrome(string s)
+{
+    for (int i = 0; i < s.size() / 2; i++)
+    {
+        if (s[i] != s[s.size() - i - 1])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+// Find Min/Max
+// * Greedy/Brute Force
+//* Prefix array of max/min
+// * BS
+// * DP/KNPS
+vll check()
+{
+    vll knap;
+    for (ll i = 1; i <= 9; i++)
+    {
+        knap.pb(i);
+    }
+    for (ll i = 10; i <= 40004; i++)
+    {
+        if (isPalindrome(to_string(i)))
+        {
+            knap.pb(i);
+        }
+    }
+    return knap;
+}
+void solve()
+{
+    // ll n;
+    // cin >> n;
+    // cout << dp[knap.size()][n] % mod << endl;
+    rr;
+}
+int main()
+{
+    io();
+    // solve();
+    vll knap = check();
+    // deb(knap);
+    ll dp[knap.size() + 5][40005];
+    memset(dp, 0, sizeof(dp));
+    // cout << "HI";
+    for (ll row = 1; row <= knap.size(); row++)
+    {
+        for (ll col = 0; col <= 40004; col++)
+        {
+            if (row == 0)
+                continue;
+            if (col == 0)
+            {
+                dp[row][col] = 1;
+                continue;
+            }
+            if (knap[row - 1] > col)
+            {
+                dp[row][col] = dp[row - 1][col] % mod;
+            }
+            else
+            {
+                dp[row][col] = (dp[row][col - knap[row - 1]] + dp[row - 1][col]) % mod;
+            }
+        }
+    }
+    ll t = 1;
+    cin >> t;
+    while (t--)
+    {
+        // solve();
+        ll n;
+        cin >> n;
+        ll val = dp[knap.size()][n] % mod;
+        val = val >= 0 ? val : val + mod;
+        cout << val << endl;
+    }
+    // cerr << endl <<setprecision(20)<< double( clock() - startTime ) / (double)CLOCKS_PER_SEC<< " seconds." << endl;
+
+    // cout<<fixed<<setprecision(10)<<ans<<endl;
+
+    // cout<<printf("%.8lf", hi)<<endl;
+    return 0;
+}

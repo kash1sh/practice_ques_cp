@@ -425,54 +425,71 @@ bool isPowerOfTwo(ll n)
 {
     return n && (!(n & (n - 1)));
 }
-ll n;
-vll a;
-bool check(ll x)
-{
-    ll val = a[n - 1];
-    ll sum = 0;
-    for (ll i = 0; i < n; i++)
-    {
-        sum += a[i];
-    }
-    // accumulate(a.begin(), a.end(), sum);
-    sum += x;
-    ll num = (sum) % (n - 1);
-    if (num == 0)
-    {
-        return true;
-    }
-    return false;
-}
+
+// bool check(ll x)
+// {
+//     ll val = a[n - 1];
+//     ll sum = 0;
+//     for (ll i = 0; i < n; i++)
+//     {
+//         sum += a[i];
+//     }
+//     // accumulate(a.begin(), a.end(), sum);
+//     sum += x;
+//     ll num = (sum) % (n - 1);
+//     if (num == 0)
+//     {
+//         return true;
+//     }
+//     return false;
+// }
 void solve()
 {
-
+    ll n;
+    vll a(n);
     cin >> n;
-
-    fo(i, 0, n)
+    ll sum = 0, maxa = LONG_MIN;
+    for (ll i = 0; i < n; i++)
     {
-        ll x;
-        cin >> x;
-        a.pb(x);
-    }
-    sort(a.begin(), a.end());
-    ll l = 0, h = 1e5, ans = INT_MAX;
-    while (l < h)
-    {
-        ll mid = (l + h) / 2;
 
-        if (check(mid))
-        {
-            ans = min(ans, mid);
-            h = mid - 1;
-        }
-        else
-        {
-            l = mid + 1;
-        }
+        cin >> a[i];
+
+        sum += a[i];
+        maxa = max(maxa, a[i]);
     }
-    cout << ans << endl;
+    debug(maxa);
+    ll val;
+    while (1)
+    {
+        val = maxa * (n - 1) - sum;
+        if (val < 0)
+        {
+            maxa++;
+            continue;
+        }
+        break;
+
+        // rr;
+    }
+    cout << val << endl;
     rr;
+    // while (l < h)
+    // {
+    //     ll mid = (l + h) / 2;
+    //     ll val = (n - 1) * mid - sum;
+    //     if (val > 0)
+    //     {
+    //         // ans = min(ans, mid);
+    //         // h = mid - 1;
+    //         h = mid;
+    //     }
+    //     else
+    //     {
+    //         l = mid + 1;
+    //     }
+    // }
+    // cout << h << endl;
+    // rr;
 }
 int main()
 {

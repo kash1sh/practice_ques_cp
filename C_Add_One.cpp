@@ -1,4 +1,3 @@
-
 #include <bits/stdc++.h>
 #define ll long long
 #define pb push_back
@@ -6,12 +5,28 @@
 #define vpll vector<pair<ll, ll>>
 #define fo(i, k, n) for (ll i = k; i < n; i++)
 #define fo1(i, k, n) for (ll i = k; i <= n; i++)
-#define Endl endl
+#define rr return
 #define ff first
 #define ss second
+#define llmin LONG_MIN
+#define llmax LONG_MAX
+#define Yes cout << "Yes\n"
+#define No cout << "No\n"
+#define YES cout << "YES\n"
+#define NO cout << "NO\n"
+#define yes cout << "yes\n"
+#define no cout << "no\n"
 
+#define show(A)           \
+    for (auto i : A)      \
+        cout << i << " "; \
+    cout << '\n';
+#define endl "\n"
+#define Endl endl
+clock_t startTime = clock();
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
+#define all(v) v.begin(), v.end()
 #ifndef ONLINE_JUDGE
 #define debug(x) cerr << #x << " " << x << endl;
 #else
@@ -23,14 +38,17 @@ void io()
 {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    cout.tie(0);
     // #ifndef ONLINE_JUDGE
     // freopen("input.txt", "r", stdin);
     // freopen("error.txt","w",stderr);
     // freopen("output.txt", "w", stdout);
     // #endif
 }
-
+double PI = 4 * atan(1);
 ll mod = 1e9 + 7, mxn = 3e5 + 5;
+const int dx[4] = {1, -1, 0, 0};
+const int dy[4] = {0, 0, -1, 1};
 void deb(vector<ll> v)
 {
     for (auto t : v)
@@ -51,71 +69,32 @@ bool sortbysecdesc(const pair<int, int> &a,
 {
     return a.second > b.second;
 }
-bool check_sorted(vll a)
-{
-    ll n = a.size();
-    for (ll i = 1; i < n; i++)
-    {
-        if (a[i] >= a[i - 1])
-            continue;
-        return false;
-    }
-    return true;
-}
-
-ll po(ll a, ll b, ll mod)
+vll fact(2e5 + 5, 1);
+ll binPow(ll a, ll b)
 {
     if (b == 0)
         return 1;
+    if (b == 1)
+        return a;
+    ll ret = binPow(a, b / 2);
     if (b % 2 == 0)
-        return po(mul(a, a, mod), b / 2, mod);
-    return mul(a, po(mul(a, a, mod), (b - 1) / 2, mod), mod);
+        return (ret * ret) % mod;
+    return ((ret * ret) % mod * a) % mod;
 }
-
-long long power(long long X, long long N)
+ll inv(ll a)
 {
-    if (N == 0)
-        return 1;
-    if (N % 2 == 0)
-        return power(X * X, N / 2);
-    return X * power(X, N - 1);
+    return (binPow(a, mod - 2) % mod + mod) % mod;
 }
-
-vll fac(200003);
-ll facto(ll n)
+ll binom(ll a, ll b)
 {
-
-    fac[0] = 1;
-    fac[1] = 1;
-    for (ll i = 2; i <= 200003; i++)
-    {
-        fac[i] = i * fac[i - 1];
-    }
-    return fac[n];
-}
-long combi(ll n, ll k)
-{
-    long long ans = 1;
-    k = k > n - k ? n - k : k;
-    ll j = 1;
-    for (; j <= k; j++, n--)
-    {
-        if (n % j == 0)
-        {
-            ans *= n / j;
-        }
-        else if (ans % j == 0)
-        {
-            ans = ans / j * n;
-        }
-        else
-        {
-            ans = (ans * n) / j;
-        }
-    }
-    return ans;
+    // before t
+    //  for (int i = 1;i<=2e5;i++)fact[i] = (i * fact[i - 1])%mod;
+    if (b < 0 or a < 0)
+        return 0;
+    return (((fact[a] * inv(fact[b])) % mod * inv(fact[a - b])) % mod + mod) % mod;
 }
 // CONDITION && cout << "YES" || cout << "NO"; cout << '\n';
+// int a = count(all(s),'A');
 vector<int> sieveOfEratosthenes(int N)
 {
     bool primes[N + 1];
@@ -135,26 +114,20 @@ vector<int> sieveOfEratosthenes(int N)
 
     return arr;
 }
-void prime_fact(ll n, vector<ll> &res)
+vector<int> factors(int n)
 {
-    while (n % 2 == 0)
+    vector<int> f;
+    for (int x = 2; x * x <= n; x++)
     {
-        res.pb(2);
-        n = n / 2;
-    }
-
-    for (ll i = 3; i <= sqrt(n); i = i + 2)
-    {
-        while (n % i == 0)
+        while (n % x == 0)
         {
-            res.pb(i);
-            n = n / i;
+            f.push_back(x);
+            n /= x;
         }
     }
-    if (n > 2)
-    {
-        res.pb(n);
-    }
+    if (n > 1)
+        f.push_back(n);
+    return f;
 }
 bool valid_coordinate(ll x, ll y, ll n, ll m)
 {
@@ -167,75 +140,59 @@ bool valid_coordinate(ll x, ll y, ll n, ll m)
     else
         return true;
 }
-int sod(int n)
+
+bool prime(ll n)
 {
-    int sum = 0;
-    while (n)
+    if (n < 2)
+        return false;
+    for (ll x = 2; x * x <= n; x++)
     {
-        sum += (n % 10);
-        n /= 10;
+        if (n % x == 0)
+            return false;
     }
-    return sum;
+    return true;
 }
 
 bool isPowerOfTwo(ll n)
 {
     return n && (!(n & (n - 1)));
 }
+// Find Min/Max
+// * Greedy/Brute Force
+//* Prefix array of max/min
+// * BS
+// * DP/KNPS
 
-ll dp[200002][11];
-ll help(ll m, ll x)
+ll n, k;
+vector<ll> v;
+ll dp[10][200001];
+ll rec(ll dig, ll rem)
 {
-    // if (m == 0)
-    //     return 0;
-
-    // if (dp[m][x] != -1)
-    //     return dp[m][x];
-
-    // if (x + m >= 10)
-    // {
-    //     dp[m][x] = ((1 + help(m - (10 - x), 1)) + (help(m - (10 - x), 0))) % mod;
-    // }
-    // // else
-    // // {
-    // //     dp[m][x] = help(x + m, 0) % mod;
-    // // }
-    // return dp[m][x] % mod;
-    if (m == 0)
+    if (rem <= 0)
         return 0;
-    // ll &ans = dp[m][x];
-    if (dp[m][x] != -1)
-        return dp[m][x];
-    ll ans = 0;
-    if (m >= 10 - x)
-        ans = (1 + help(m - (10 - x), 1) % mod + help(m - (10 - x), 0) % mod) % mod;
-    return dp[m][x] = ans;
-    // return ans;
+    if (10 - dig > rem)
+        return 0;
+    if (dp[dig][rem] != -1)
+        return dp[dig][rem] % mod;
+    return dp[dig][rem] = (1 + rec(0, rem - (10 - dig)) + rec(1, rem - (10 - dig))) % mod;
 }
 void solve()
 {
-    //     string s;
-    //     ll m;
-    //     cin >> s >> m;
-
-    //     ll ans = 0;
-    //     for (ll i = 0; i < s.size(); i++)
-    //     {
-    //         ans = (ans + 1 + help(m, s[i] - '0')) % mod;
-    //     }
-    //     cout << ans << endl;
-    //     return;
-    ll n, i, j, ans = 0, m;
-    string a;
-
-    cin >> a >> m;
-    n = a.size();
-    fo(i, 0, n)
+    cin >> n >> k;
+    vector<ll> digits;
+    ll ans = 0;
+    while (n > 0)
     {
-        int x = a[i] - '0';
-        ans = (ans + 1 + help(m, x)) % mod;
+        digits.pb(n % 10);
+        n /= 10;
     }
-    cout << ans << Endl;
+
+    for (ll i = 0; i < digits.size(); i++)
+    {
+        ans += rec(digits[i], k) + 1;
+        ans %= mod;
+    }
+    cout << ans << '\n';
 }
 int main()
 {
@@ -243,15 +200,16 @@ int main()
     // solve();
     // ll t=1;
     memset(dp, -1, sizeof(dp));
-    help(200001, 0);
-    help(200001, 1);
     ll t;
     cin >> t;
     while (t--)
     {
         solve();
     }
+    // cerr << endl <<setprecision(20)<< double( clock() - startTime ) / (double)CLOCKS_PER_SEC<< " seconds." << endl;
 
-    // cout<<setprecision(10)
+    // cout<<fixed<<setprecision(10)<<ans<<endl;
+
+    // cout<<printf("%.8lf", hi)<<endl;
     return 0;
 }

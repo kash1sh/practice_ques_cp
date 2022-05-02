@@ -9,7 +9,7 @@
 #define Endl endl
 #define ff first
 #define ss second
-
+#define rr return
 #define setbits(x) __builtin_popcountll(x)
 #define zrobits(x) __builtin_ctzll(x)
 #ifndef ONLINE_JUDGE
@@ -188,27 +188,49 @@ void solve()
     cin >> n;
     vector<int> a(n);
     map<int, int> mp;
+    ll val = 0;
+    // ll val = (n % 2 == 1 ? 1ll : 0ll);
+    if (n % 2 == 1)
+    {
+        val = 1;
+    }
     for (int i = 0; i < n; i++)
     {
         cin >> a[i];
         mp[a[i]]++;
     }
     int mx = 0;
+    ll sum = 0;
     for (auto x : mp)
     {
         mx = max(mx, x.second);
+        sum += x.ss;
     }
-    if (mx <= n / 2)
+    sum -= mx;
+    if (mx <= sum)
     {
-        if (n & 1)
+        if (n % 2 == 0)
         {
-            cout << 1 << endl;
-            return;
+            cout << 0 << endl;
+            rr;
         }
-        cout << "0" << endl;
-        return;
+        cout << 1 << endl;
+        rr;
     }
-    cout << n - ((n - mx) * 2) << endl;
+
+    cout << max(mx - sum, val) << endl;
+    rr;
+    // if (mx <= n / 2)
+    // {
+    //     if (n & 1)
+    //     {
+    //         cout << 1 << endl;
+    //         return;
+    //     }
+    //     cout << "0" << endl;
+    //     return;
+    // }
+    // cout << n - ((n - mx) * 2) << endl;
     return;
     // set<ll, greater<ll>> s;
     // for (auto i : m)
